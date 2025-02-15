@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 // Extend the Window interface to include loadPyodide and pyodide
 declare global {
   interface Window {
-    loadPyodide: () => Promise<any>;
+    loadPyodide: (() => Promise<any>) | undefined;
     pyodide: any;
   }
 }
@@ -19,8 +19,15 @@ const CodeRunner: React.FC<CodeRunnerProps> = ({ language, initialCode }) => {
   const [output, setOutput] = useState<string>('');
   const [pyodideReady, setPyodideReady] = useState<boolean>(false);
   const editorRef = useRef<any>(null);
-
   useEffect(() => {
+    async function loadPyodideScript() {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js';
+      script.async = true;
+      script.onload = initializePyodide;
+      document.body.appendChild(script);
+    }
+
     async function initializePyodide() {
       if (window.loadPyodide) {
         try {
@@ -34,7 +41,8 @@ const CodeRunner: React.FC<CodeRunnerProps> = ({ language, initialCode }) => {
         setOutput("Pyodide is not available. Ensure the script is loaded.");
       }
     }
-    initializePyodide();
+
+    loadPyodideScript();
   }, []);
 
   const runCode = async () => {
