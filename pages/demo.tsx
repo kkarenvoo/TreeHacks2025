@@ -10,13 +10,19 @@ const questions = [
   {
     id: 1,
     name: "Behavioral",
-    description: "From LinkedIn, Amazon, Adobe",
+    description: "Practice answering questions about your experience.",
     difficulty: "Easy",
   },
   {
     id: 2,
-    name: "Technical",
-    description: "From Google, Meta, and Apple",
+    name: "Technical Coding",
+    description: "Practice your technical skills with a coding assessment.",
+    difficulty: "Medium",
+  },
+  {
+    id: 3,
+    name: "Technical Trivia",
+    description: "Practice answering questions about coding concepts.",
     difficulty: "Medium",
   },
 ];
