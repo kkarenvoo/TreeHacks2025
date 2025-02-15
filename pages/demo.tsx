@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+import CodeRunner from "@/components/CodeRunner";
 
 const questions = [
   {
@@ -343,6 +344,8 @@ export default function DemoPage() {
               demo interview
             </span>
           </p>
+          <CodeRunner language="python" initialCode=""/>
+
           {completed ? (
             <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
               <motion.div
