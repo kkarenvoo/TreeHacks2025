@@ -282,11 +282,11 @@ const createConversationObject = (
         <div className="absolute bottom-20 right-5 z-50 text-white flex flex-col items-center">
           <div className="mb-2 text-sm">{`Timer: ${timer}s`}</div>
 
-          {/* Record Button as a Red Dot */}
+          {/* Record Button as a Red Dot
           <button
             onClick={isRecording ? stopRecording : startRecording}
             className="w-8 h-8 rounded-full bg-red-600 hover:bg-red-700"
-          />
+          /> */}
         </div>
       </div>
       

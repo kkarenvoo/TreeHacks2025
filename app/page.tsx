@@ -75,9 +75,10 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              CodeCrack: Elevate Your<br />
-              Tech <span className="text-blue-400">Interviews</span>
-              <span className="text-blue-400">.</span>
+              {/* Your AI-Powered Mock Interview Partner */}
+              CodeCrack: <br />
+              Your<span className="text-blue-400"> AI-Powered </span>
+              <span className="text-blue-400"></span>Mock Interview Partner
             </motion.h1>
             
             <motion.div 

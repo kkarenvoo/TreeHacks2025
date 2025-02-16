@@ -1,5 +1,5 @@
 <a href="https://demo.useliftoff.com">
-  <img alt="Liftoff – AI-Powered Mock Interviews" src="https://demo.useliftoff.com/opengraph-image">
+  <img alt="CodeCrack - AI Mock Technical Interviews" src="https://demo.useliftoff.com/opengraph-image">
   <h1 align="center">Liftoff Interviews</h1>
 </a>
 

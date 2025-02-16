@@ -46,7 +46,7 @@ export function Conversation({ setQuestion, code }: any) {
         <button
           onClick={startConversation}
           disabled={conversation.status === "connected"}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+          className="px-4 py-2 bg-green-500 text-white rounded disabled:bg-gray-300"
         >
           Start Conversation
         </button>
