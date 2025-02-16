@@ -1,10 +1,10 @@
 <a href="https://demo.useliftoff.com">
-  <img alt="Liftoff – AI-Powered Mock Interviews" src="https://demo.useliftoff.com/opengraph-image">
-  <h1 align="center">Liftoff Interviews</h1>
+  <img alt="CodeCrack – AI-Powered Mock Interviews" src="https://demo.useliftoff.com/opengraph-image">
+  <h1 align="center">CodeCrack Interviews</h1>
 </a>
 
 <p align="center">
-  Mock Interview Simulator with AI-Powered Feedback
+  Mock Interview Simulator with Conversational AI-Powered Feedback
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 ## Introduction
 
-Liftoff is an interview preparation tool that provides AI feedback on your mock interviews.
+CodeCrack is an interview preparation tool that provides AI speech-to-speech feedback on your mock interviews, helping you crack your real interview.
 
 ## One-click Deploy
 
