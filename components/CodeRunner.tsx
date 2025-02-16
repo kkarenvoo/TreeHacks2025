@@ -101,15 +101,62 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
     };
   }, []);
 
+interface ConversationObject {
+    setQuestion: React.Dispatch<React.SetStateAction<string | null>>;
+    code: string;
+}
+
+const createConversationObject = (
+    setQuestion: React.Dispatch<React.SetStateAction<string | null>>,
+    code: string
+): ConversationObject => {
+    return {
+        setQuestion: setQuestion,
+        code: code,
+    };
+};
+
+  let codeToRun : string = "hasnt been updated yetttt";
+  let conversation = createConversationObject(setQuestion, codeToRun);
   const runCode = async () => {
+    console.log("RUN CODE HAS BEEN CALLED")
     if (!pyodideReady) {
       setOutput("Python environment is still loading... Please wait.");
       return;
     }
-
+    // def twoSum(nums, target):
+    //     for i in range(len(nums)):
+    //         for j in range(i + 1, len(nums)):
+    //             if nums[j] == target - nums[i]:
+    //                 return [i, j]
+    //     return []
     setOutput("Running...");
-    const codeToRun = editorRef.current?.getValue() || code;
+    codeToRun = editorRef.current?.getValue() || code;
+    //const codeToRun = editorRef.current?.getValue() || code;
+    console.log("from coderunner",codeToRun);
 
+
+    // interface ConversationObject {
+    //     setQuestion: React.Dispatch<React.SetStateAction<string | null>>;
+    //     code: string;
+    // }
+
+    // const createConversationObject = (
+    //     setQuestion: React.Dispatch<React.SetStateAction<string | null>>,
+    //     code: string
+    // ): ConversationObject => {
+    //     return {
+    //         setQuestion: setQuestion,
+    //         code: code,
+    //     };
+    // };
+
+    conversation = createConversationObject(setQuestion, codeToRun);
+    console.log('technically in conversation...', conversation.code);
+    // conversationProperties = {
+    //     setQuestion: setQuestion,
+    //     code: codeToRun,
+    // };
     try {
       await window.pyodide.runPythonAsync(`
         sys.stdout.stdout.truncate(0)
@@ -159,6 +206,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
     return () => clearInterval(interval); // Clean up the interval on component unmount
   }, [isRecording]);
 
+  codeToRun = editorRef.current?.getValue() || code;
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Panel - Interview Question */}
@@ -209,8 +257,8 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
             >
               {loading ? "Loading Python..." : "Run Code"}
+              <Conversation setQuestion={conversation.setQuestion} code={codeToRun} />
             </button>
-            <Conversation setQuestion={setQuestion} code={code} />
           </div>
           <pre className="mt-4 p-4 bg-[#2D2D2D] text-white rounded-md font-mono text-sm h-[20vh] overflow-y-auto">
             {output || "Output will appear here..."}
@@ -237,6 +285,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
           />
         </div>
       </div>
+      
     </div>
   );
 };

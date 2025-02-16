@@ -4,6 +4,8 @@ import { useConversation } from "@11labs/react";
 import { useCallback } from "react";
 
 export function Conversation({ setQuestion, code }: any) {
+  console.log("hellooooooo")
+  console.log("from conversation", String(code));
   const conversation = useConversation({
     onConnect: () => console.log("Connected"),
     onDisconnect: () => console.log("Disconnected"),
@@ -18,7 +20,7 @@ export function Conversation({ setQuestion, code }: any) {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: "", // Replace with your agent ID
+        agentId: "9208b8cOTlcDHRt2ydRE", // Replace with your agent ID
         clientTools: {
           getUserResponse: async () => {
             console.log("CODE", code);
