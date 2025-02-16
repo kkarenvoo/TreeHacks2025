@@ -200,7 +200,7 @@ const createConversationObject = (
         setTimer((prevTimer) => prevTimer + 1); // Increase timer every second
       }, 1000);
     } else {
-      clearInterval(interval); // Stop timer when recording is off
+      clearInterval(interval); // ftimer when recording ifstaa off
     }
 
     return () => clearInterval(interval); // Clean up the interval on component unmount

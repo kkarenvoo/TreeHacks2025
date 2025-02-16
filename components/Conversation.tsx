@@ -1,6 +1,7 @@
 "use client";
 
 import { useConversation } from "@11labs/react";
+import { StreamingQuerystring } from "formidable/parsers";
 import { useCallback } from "react";
 
 export function Conversation({ setQuestion, code }: any) {
@@ -13,13 +14,14 @@ export function Conversation({ setQuestion, code }: any) {
     onError: (error) => console.error("Error:", error),
   });
 
+  let conversationId : string = '';
   const startConversation = useCallback(async () => {
     try {
       // Request microphone permission
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       // Start the conversation with your agent
-      await conversation.startSession({
+      conversationId = await conversation.startSession({
         agentId: "9208b8cOTlcDHRt2ydRE", // Replace with your agent ID
         clientTools: {
           getUserResponse: async () => {
@@ -36,8 +38,27 @@ export function Conversation({ setQuestion, code }: any) {
     }
   }, [conversation]);
 
+  function sleep(ms: Number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  let agent_feedback : string = "";
   const stopConversation = useCallback(async () => {
     await conversation.endSession();
+    console.log("CONVO ID:", conversationId)
+    const url = 'https://api.elevenlabs.io/v1/convai/conversations/' + 'knr1r6Wo9nguGRsC1Bkg';
+
+    await sleep(120000);
+    const options = {method: 'GET', headers: {'xi-api-key': 'sk_40e013042bdf2b24be6ffdd38ab707a63fdd8042195d5b38'}};
+
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      agent_feedback = data['analysis']['evaluation_criteria_results']['quality_of_verbal_explanation']['rationale'];
+    } catch (error) {
+      console.error(error);
+    }
+    
   }, [conversation]);
 
   return (
