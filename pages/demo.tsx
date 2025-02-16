@@ -25,21 +25,21 @@ const questions = [
 const interviewers = [
   {
     id: "John",
-    name: "John",
+    name: "Easy",
     description: "Software Engineering",
     level: "L3",
     difficulty: "Easy"
   },
   {
     id: "Richard",
-    name: "Richard",
+    name: "Medium",
     description: "Engineering Manager",
     level: "L5",
     difficulty: "Medium"
   },
   {
     id: "Sarah",
-    name: "Sarah",
+    name: "Hard",
     description: "Director of Engineering",
     level: "L7",
     difficulty: "Hard"
@@ -199,9 +199,9 @@ export default function DemoPage() {
       const question =
         selected.name === "Behavioral"
           ? `Tell me about yourself. Why don${`’`}t you walk me through your resume?`
-          : selectedInterviewer.name === "John"
+          : selectedInterviewer.id === "John"
           ? "What is a Hash Table, and what is the average case and worst case time for each of its operations?"
-          : selectedInterviewer.name === "Richard"
+          : selectedInterviewer.id === "Richard"
           ? "Uber is looking to expand its product line. Talk me through how you would approach this problem."
           : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?";
 
@@ -439,9 +439,9 @@ export default function DemoPage() {
                     <h2 className="text-2xl font-semibold text-left text-[#1D2B3A] mb-2">
                       {selected.name === "Behavioral"
                         ? `Tell me about yourself. Why don${`’`}t you walk me through your resume?`
-                        : selectedInterviewer.name === "John"
+                        : selectedInterviewer.id === "John"
                         ? "Please solve the problem above."
-                        : selectedInterviewer.name === "Richard"
+                        : selectedInterviewer.id === "Richard"
                         ? "Uber is looking to expand its product line. Talk me through how you would approach this problem."
                         : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?"}
                     </h2>
@@ -857,9 +857,7 @@ export default function DemoPage() {
                                         as="span"
                                         className="text-gray-500"
                                       >
-                                        <span className="block">
-                                          {question.description}
-                                        </span>
+                                        
                                       </RadioGroup.Description>
                                     </span>
                                   </span>
@@ -948,7 +946,7 @@ export default function DemoPage() {
                       And an interviewer
                     </h2>
                     <p className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal my-4">
-                      Choose whoever makes you feel comfortable. You can always
+                      Choose the level that you want to prepare for. You can always
                       try again with another one.
                     </p>
                     <div>
@@ -990,22 +988,20 @@ export default function DemoPage() {
                                         as="span"
                                         className="text-gray-500"
                                       >
-                                        <span className="block">
-                                          {interviewer.description}
-                                        </span>
+                                        
                                       </RadioGroup.Description>
                                     </span>
                                   </span>
 
-                                  <span className={`ml-4 mt-0.5 flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                    interviewer.difficulty === "Easy" 
-                                      ? "bg-green-100 text-green-800" 
-                                      : interviewer.difficulty === "Medium"
-                                      ? "bg-yellow-100 text-yellow-800"
-                                      : "bg-red-100 text-red-800"
-                                  }`}>
-                                    {interviewer.difficulty}
-                                  </span>
+                                  <span
+                                    className={`w-9 h-9 rounded-full inline-block ${
+                                      interviewer.difficulty === "Easy"
+                                        ? "bg-green-500"
+                                        : interviewer.difficulty === "Medium"
+                                        ? "bg-yellow-500"
+                                        : "bg-red-500"
+                                    }`}
+                                  ></span>
 
                                   <span
                                     className={classNames(
@@ -1393,9 +1389,9 @@ export default function DemoPage() {
                       >
                         {selected.name === "Behavioral"
                           ? "Tell me about yourself"
-                          : selectedInterviewer.name === "John"
+                          : selectedInterviewer.id === "John"
                           ? "What is a Hash Table, and what is the average case for each of its operations?"
-                          : selectedInterviewer.name === "Richard"
+                          : selectedInterviewer.id === "Richard"
                           ? "Uber is looking to expand its product line. How would you go about doing this?"
                           : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?"}
                       </motion.span>
@@ -1425,7 +1421,7 @@ export default function DemoPage() {
                       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                       className="mt-[12px] flex bg-gray-100 h-[80%] rounded-lg relative ring-1 ring-gray-900/5 shadow-md"
                     >
-                      {selectedInterviewer.name === "John" ? (
+                      {selectedInterviewer.id === "John" ? (
                         <motion.img
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -1439,7 +1435,7 @@ export default function DemoPage() {
                           alt="John's Interviewer Profile"
                           className="absolute top-6 left-6 w-[30%] aspect-video bg-gray-700 rounded ring-1 ring-gray-900/5 shadow-md object-cover"
                         />
-                      ) : selectedInterviewer.name === "Richard" ? (
+                      ) : selectedInterviewer.id === "Richard" ? (
                         <motion.img
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -1453,7 +1449,7 @@ export default function DemoPage() {
                           alt="Richard's Interviewer Profile"
                           className="absolute top-6 left-6 w-[30%] aspect-video bg-gray-700 rounded ring-1 ring-gray-900/5 shadow-md object-cover"
                         />
-                      ) : selectedInterviewer.name === "Sarah" ? (
+                      ) : selectedInterviewer.id === "Sarah" ? (
                         <motion.img
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}

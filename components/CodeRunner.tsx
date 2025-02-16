@@ -254,7 +254,7 @@ const createConversationObject = (
               automaticLayout: true,
             }}
           />
-          <div className="mt-4">
+          <div className="mt-4 flex justify-center">
             <button
               onClick={runCode}
               disabled={loading || !pyodideReady}
@@ -264,6 +264,7 @@ const createConversationObject = (
               <Conversation setQuestion={conversation.setQuestion} code={codeToRun} />
             </button>
           </div>
+
           <pre className="mt-4 p-4 bg-[#2D2D2D] text-white rounded-md font-mono text-sm h-[20vh] overflow-y-auto">
             {output || "Output will appear here..."}
           </pre>
@@ -282,11 +283,11 @@ const createConversationObject = (
         <div className="absolute bottom-20 right-5 z-50 text-white flex flex-col items-center">
           <div className="mb-2 text-sm">{`Timer: ${timer}s`}</div>
 
-          {/* Record Button as a Red Dot */}
+          {/* Record Button as a Red Dot
           <button
             onClick={isRecording ? stopRecording : startRecording}
             className="w-8 h-8 rounded-full bg-red-600 hover:bg-red-700"
-          />
+          /> */}
         </div>
       </div>
       

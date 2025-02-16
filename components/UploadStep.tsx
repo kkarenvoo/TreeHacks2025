@@ -4,9 +4,9 @@ import { Upload } from "lucide-react"; // Install npm install lucide-react
 import Link from "next/link";
 
 interface UploadStepProps {
-  onNextStep: (resumeFile: File, jdText: string) => void;
+  onNextStep: (resumeFile: File | null, jdText: string) => void;
 }
-
+  
 const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
   const [resume, setResume] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState<string>('');
@@ -77,7 +77,7 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
           <label htmlFor="resume" className="cursor-pointer">
             <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
             <p className="text-sm font-medium text-gray-900">
-              {resume ? resume.name : 'Upload your resume'}
+              {resume ? resume.name : 'Upload your resume (Optional)'}
             </p>
             <p className="text-xs text-gray-500 mt-1">
               Drop your PDF file here or click to browse
@@ -88,7 +88,7 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
         {/* Job Description Textbox */}
         <div className="border-2 border-dashed rounded-lg p-4 text-center border-gray-300">
           <label htmlFor="jobDescription" className="block text-sm font-medium text-gray-900 mb-2">
-            Enter Job Description
+            Enter Job Description (Optional)
           </label>
           <textarea
             id="jobDescription"
@@ -114,20 +114,13 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
         </div>
         <button
           onClick={() => {
-            if (resume && jobDescription.trim().length > 0) {
-              onNextStep(resume, jobDescription);
-            }
+            onNextStep(resume, jobDescription.trim());
           }}
-          disabled={!resume || jobDescription.trim().length === 0}
-          className={`group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white no-underline flex gap-x-2 active:scale-95 scale-100 duration-75 ${
-            !resume || jobDescription.trim().length === 0 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247]'
-          }`}
-          style={{
+          className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white no-underline flex gap-x-2 active:scale-95 scale-100 duration-75 hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247]"
+            style={{
             boxShadow:
-              "0px 1px 4px rgba(13, 34, 71, 0.17), inset 0px 0px 0px 1px #061530, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
-          }}
+            "0px 1px 4px rgba(13, 34, 71, 0.17), inset 0px 0px 0px 1px #061530, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
+        }}
         >
           <span> Continue </span>
           <svg
