@@ -6,6 +6,13 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import CodeRunner from "@/components/CodeRunner";
+import React from 'react';
+import UploadStep from '@/components/UploadStep';
+import { Upload } from "lucide-react";
+
+
+// const [resume, setResume] = useState<File | null>(null);
+// const [jobDescription, setJobDescription] = useState<File | null>(null);
 
 const questions = [
   {
@@ -62,7 +69,7 @@ export default function DemoPage() {
   const [selectedInterviewer, setSelectedInterviewer] = useState(
     interviewers[0]
   );
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(true);
   const webcamRef = useRef<Webcam | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -838,7 +845,11 @@ export default function DemoPage() {
           </motion.p>
           <div className="w-full min-h-[60vh] md:w-1/2 md:h-screen flex flex-col px-4 pt-2 pb-8 md:px-0 md:py-2 bg-[#FCFCFC] justify-center">
             <div className="h-full w-full items-center justify-center flex flex-col">
-            {step === 1 ? (
+            {step === 0 ? (
+              <UploadStep 
+                onNextStep={() => setStep(1)} 
+              />
+            ) : step === 1 ? (
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
