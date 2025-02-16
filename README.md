@@ -1,5 +1,5 @@
 <a href="https://demo.useliftoff.com">
-  <img alt="CodeCrack – AI-Powered Mock Interviews" src="Users\achin\Downloads\code_crack.png">
+  <img alt="CodeCrack – AI-Powered Mock Interviews" src="https://drive.google.com/uc?id=1PRzt9zw3pJdKV0Bg07YJlzY7Wsa0n0pn">
   <h1 align="center">CodeCrack Interviews</h1>
 </a>
 
@@ -76,9 +76,7 @@ npx create-next-app liftoff --example "https://github.com/Tameyer41/liftoff"
 
 ## How it all works
 
-Liftoff uses FFmpeg to transcode the raw video into MP3. Chrome, Safari, and Firefox all record with different codecs, and FFmpeg is great for standardizing them.
-
-We then send the audio directly to be transcribed by OpenAI's Whisper endpoint, and then stream feedback from the edge using OpenAI's gpt-3.5-turbo.
+CodeCrack is powered by ElevenLabs' AI 
 
 ## Author
 
