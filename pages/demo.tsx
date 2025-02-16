@@ -35,13 +35,13 @@ const interviewers = [
   {
     id: "Richard",
     name: "Richard",
-    description: "Product Management",
+    description: "Engineering Manager",
     level: "L5",
   },
   {
     id: "Sarah",
     name: "Sarah",
-    description: "Other",
+    description: "Director of Engineering",
     level: "L7",
   },
 ];
