@@ -552,6 +552,7 @@ export default function DemoPage() {
                           </div>
                         </div>
                       )}
+                      {selected.name === "Behavioral" && (
                       <Webcam
                         mirrored
                         audio
@@ -564,6 +565,19 @@ export default function DemoPage() {
                         }}
                         className="absolute z-10 min-h-[100%] min-w-[100%] h-auto w-auto object-cover"
                       />
+                    )}
+                      {/* <Webcam
+                        mirrored
+                        audio
+                        muted
+                        ref={webcamRef}
+                        videoConstraints={videoConstraints}
+                        onUserMedia={handleUserMedia}
+                        onUserMediaError={(error) => {
+                          setRecordingPermission(false);
+                        }}
+                        className="absolute z-10 min-h-[100%] min-w-[100%] h-auto w-auto object-cover"
+                      /> */}
                     </div>
                     {loading && (
                       <div className="absolute flex h-full w-full items-center justify-center">
