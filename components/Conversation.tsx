@@ -18,7 +18,7 @@ export function Conversation({ setQuestion, code }: any) {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: "", // Replace with your agent ID
+        agentId: "9208b8cOTlcDHRt2ydRE", // Replace with your agent ID
         clientTools: {
           getUserResponse: async () => {
             console.log("CODE", code);
@@ -57,10 +57,10 @@ export function Conversation({ setQuestion, code }: any) {
         </button>
       </div>
 
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <p>Status: {conversation.status}</p>
         <p>Agent is {conversation.isSpeaking ? "speaking" : "listening"}</p>
-      </div>
+      </div> */}
     </div>
   );
 }

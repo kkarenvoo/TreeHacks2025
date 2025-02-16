@@ -489,7 +489,7 @@ export default function DemoPage() {
                               .slice(14, 19)}
                           </span>
                         </div>
-                        {isVisible && ( // If the video is visible (on screen) we show it
+                        {/* {isVisible && ( // If the video is visible (on screen) we show it
                           <div className="block absolute top-[10px] sm:top-[20px] lg:top-[40px] left-auto right-[10px] sm:right-[20px] md:right-10 h-[80px] sm:h-[140px] md:h-[180px] aspect-video rounded z-20">
                             <div className="h-full w-full aspect-video rounded md:rounded-lg lg:rounded-xl">
                               <video
@@ -524,7 +524,7 @@ export default function DemoPage() {
                               </video>
                             </div>
                           </div>
-                        )}
+                        )} */}
                         {selected.name === "Behavioral" && (
                           <Webcam
                             mirrored

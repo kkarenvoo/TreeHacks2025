@@ -75,8 +75,8 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              CodeCrack: elevate your<br />
-              tech <span className="text-blue-400">interviews</span>
+              CodeCrack: Elevate Your<br />
+              Tech <span className="text-blue-400">Interviews</span>
               <span className="text-blue-400">.</span>
             </motion.h1>
             

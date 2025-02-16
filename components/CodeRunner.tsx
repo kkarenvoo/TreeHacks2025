@@ -164,19 +164,23 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
       {/* Left Panel - Interview Question */}
       <div className="w-full md:w-1/2 p-6 bg-[#1D2B3A] text-white overflow-y-auto">
         <h2 className="text-2xl font-semibold mb-4">
-          {question ?? "Start the interview"}
+          {"Mock Interview Environment"}
         </h2>
         <p className="text-sm text-gray-300 mb-6">
-          Asked by top companies like Google, Facebook and more
+          You will be given 45 minutes to complete the technical coding question.
         </p>
         <div className="bg-[#2D3B4A] rounded-lg p-6">
-          <h3 className="text-lg font-medium mb-3">Tips for answering:</h3>
-          <ul className="space-y-2 text-gray-300">
-            <li>• Be professional and respectful in your response</li>
-            <li>• Focus on relevant experience and qualifications</li>
-            <li>• Structure your answer clearly and concisely</li>
-            <li>• Provide specific examples to support your points</li>
-          </ul>
+          {question ?? (
+            <>
+              <h3 className="text-lg font-medium mb-3">Tips for answering:</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• Be professional and respectful in your response</li>
+                <li>• Focus on relevant experience and qualifications</li>
+                <li>• Structure your answer clearly and concisely</li>
+                <li>• Provide specific examples to support your points</li>
+              </ul>
+            </>
+          )}
         </div>
       </div>
 
