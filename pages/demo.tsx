@@ -10,14 +10,14 @@ import CodeRunner from "@/components/CodeRunner";
 const questions = [
   {
     id: 1,
-    name: "Behavioral",
-    description: "Practice answering questions about your experience.",
-    difficulty: "Easy",
+    name: "Technical Coding",
+    description: "Practice your technical skills with a coding assessment.",
+    difficulty: "Medium",
   },
   {
     id: 2,
-    name: "Technical Coding",
-    description: "Practice your technical skills with a coding assessment.",
+    name: "Behavioral",
+    description: "Practice answering questions about your experience.",
     difficulty: "Medium",
   },
   {
@@ -472,7 +472,7 @@ export default function DemoPage() {
                     {selected.name === "Behavioral"
                       ? `Tell me about yourself. Why don${`’`}t you walk me through your resume?`
                       : selectedInterviewer.name === "John"
-                      ? "What is a Hash Table, and what is the average case and worst case time for each of its operations?"
+                      ? "Please solve the problem above."
                       : selectedInterviewer.name === "Richard"
                       ? "Uber is looking to expand its product line. Talk me through how you would approach this problem."
                       : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?"}
