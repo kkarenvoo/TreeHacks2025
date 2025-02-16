@@ -6,22 +6,19 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import CodeRunner from "@/components/CodeRunner";
+import UploadStep from "@/components/UploadStep";
+import { type } from "os";
 
 const questions = [
   {
     id: 1,
-    name: "Technical Coding",
+    name: "Technical",
     description: "Practice your technical skills with a coding assessment.",
   },
   {
     id: 2,
     name: "Behavioral",
     description: "Practice answering questions about your experience.",
-  },
-  {
-    id: 3,
-    name: "Technical Trivia",
-    description: "Practice answering questions about coding concepts.",
   },
 ];
 
@@ -31,18 +28,21 @@ const interviewers = [
     name: "John",
     description: "Software Engineering",
     level: "L3",
+    difficulty: "Easy"
   },
   {
     id: "Richard",
     name: "Richard",
-    description: "Product Management",
+    description: "Engineering Manager",
     level: "L5",
+    difficulty: "Medium"
   },
   {
     id: "Sarah",
     name: "Sarah",
-    description: "Other",
+    description: "Director of Engineering",
     level: "L7",
+    difficulty: "Hard"
   },
 ];
 
@@ -62,7 +62,7 @@ export default function DemoPage() {
   const [selectedInterviewer, setSelectedInterviewer] = useState(
     interviewers[0]
   );
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(true);
   const webcamRef = useRef<Webcam | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -114,9 +114,9 @@ export default function DemoPage() {
       startTimer.style.display = "none";
     }
 
-    if (vidRef.current) {
-      vidRef.current.play();
-    }
+    // if (vidRef.current) {
+    //   vidRef.current.play();
+    // }
   }, [webcamRef, setCapturing, mediaRecorderRef]);
 
   const handleDataAvailable = useCallback(
@@ -310,7 +310,7 @@ export default function DemoPage() {
       <AnimatePresence>
         {step === 3 ? (
           <div className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
-            {selected.name === "Technical Coding" && (
+            {selected.name === "Technical" && (
               <CodeRunner language="python" initialCode="" />
             )}
 
@@ -798,7 +798,11 @@ export default function DemoPage() {
           <div className="flex flex-col md:flex-row w-full md:overflow-hidden">
             <div className="w-full min-h-[60vh] md:w-1/2 md:h-screen flex flex-col px-4 pt-2 pb-8 md:px-0 md:py-2 bg-[#FCFCFC] justify-center">
               <div className="h-full w-full items-center justify-center flex flex-col">
-                {step === 1 ? (
+              {step === 0 ? (
+                <UploadStep 
+                  onNextStep={() => setStep(1)} 
+                />
+              ) : step === 1 ? (
                   <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -859,6 +863,7 @@ export default function DemoPage() {
                                       </RadioGroup.Description>
                                     </span>
                                   </span>
+
                                   <span
                                     className={classNames(
                                       active ? "border" : "border-2",
@@ -876,18 +881,19 @@ export default function DemoPage() {
                         </div>
                       </RadioGroup>
                     </div>
+                    {/* here */}
                     <div className="flex gap-[15px] justify-end mt-8">
                       <div>
-                        <Link
-                          href="/"
+                      <button
+                          onClick={() => setStep(0)}
                           className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#f5f7f9] text-[#1E2B3A] no-underline active:scale-95 scale-100 duration-75"
                           style={{
                             boxShadow:
                               "0 1px 1px #0c192714, 0 1px 3px #0c192724",
                           }}
                         >
-                          Back to home
-                        </Link>
+                          Previous step
+                        </button>
                       </div>
                       <div>
                         <button
@@ -989,6 +995,16 @@ export default function DemoPage() {
                                         </span>
                                       </RadioGroup.Description>
                                     </span>
+                                  </span>
+
+                                  <span className={`ml-4 mt-0.5 flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                    interviewer.difficulty === "Easy" 
+                                      ? "bg-green-100 text-green-800" 
+                                      : interviewer.difficulty === "Medium"
+                                      ? "bg-yellow-100 text-yellow-800"
+                                      : "bg-red-100 text-red-800"
+                                  }`}>
+                                    {interviewer.difficulty}
                                   </span>
 
                                   <span
@@ -1195,7 +1211,7 @@ export default function DemoPage() {
                       <div className="absolute w-[1px] bg-[#e8e8ed] left-[8px] top-0 bottom-0"></div>
                     </li>
                     <li className="list-none flex items-center rounded-[3px] relative bg-gray-100 text-gray-600 w-full m-0 cursor-pointer hover:bg-[#F7F7F8] focus:outline-none py-[4px]">
-                      <div className="bg-blue-600 pointer-events-none absolute left-[7px] z-10 top-1/2 h-[3px] w-[3px] rounded-full transform -translate-y-1/2"></div>
+                    <div className="bg-[#e8e8ed] pointer-events-none absolute left-[7px] z-10 top-1/2 h-[3px] w-[3px] rounded-full transform -translate-y-1/2"></div>
                       <div className="text-blue-600 truncate pr-4 pl-[18px]">
                         Question Bank
                       </div>
