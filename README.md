@@ -1,5 +1,5 @@
 <a href="https://demo.useliftoff.com">
-  <img alt="CodeCrack – AI-Powered Mock Interviews" src="code_crack.png">
+  <img alt="CodeCrack – AI-Powered Mock Interviews" src="Users\achin\Downloads\code_crack.png">
   <h1 align="center">CodeCrack Interviews</h1>
 </a>
 
