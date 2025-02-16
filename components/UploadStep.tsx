@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { Upload } from "lucide-react"; // Install npm install lucide-react
+import Link from "next/link";
 
 interface UploadStepProps {
   onNextStep: (resumeFile: File, jdText: string) => void;
@@ -100,6 +101,17 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
       </div>
 
       <div className="flex gap-[15px] justify-end mt-8">
+        <div>
+            <Link
+            href="/"
+            className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#f5f7f9] text-[#1E2B3A] no-underline active:scale-95 scale-100 duration-75"
+            style={{
+                boxShadow: "0 1px 1px #0c192714, 0 1px 3px #0c192724",
+            }}
+            >
+            Back to home
+            </Link>
+        </div>
         <button
           onClick={() => {
             if (resume && jobDescription.trim().length > 0) {
