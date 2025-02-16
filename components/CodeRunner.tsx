@@ -254,7 +254,7 @@ const createConversationObject = (
               automaticLayout: true,
             }}
           />
-          <div className="mt-4">
+          <div className="mt-4 flex justify-center">
             <button
               onClick={runCode}
               disabled={loading || !pyodideReady}
@@ -264,6 +264,7 @@ const createConversationObject = (
               <Conversation setQuestion={conversation.setQuestion} code={codeToRun} />
             </button>
           </div>
+
           <pre className="mt-4 p-4 bg-[#2D2D2D] text-white rounded-md font-mono text-sm h-[20vh] overflow-y-auto">
             {output || "Output will appear here..."}
           </pre>
