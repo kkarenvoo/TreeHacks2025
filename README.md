@@ -1,8 +1,3 @@
-<a href="https://demo.useliftoff.com">
-  <img alt="Liftoff – AI-Powered Mock Interviews" src="https://demo.useliftoff.com/opengraph-image">
-  <h1 align="center">Liftoff Interviews</h1>
-</a>
-
 <p align="center">
   <a href="https://demo.useliftoff.com">
     <img alt="CodeCrack – AI-Powered Mock Interviews" src="https://drive.google.com/uc?id=1PRzt9zw3pJdKV0Bg07YJlzY7Wsa0n0pn">
