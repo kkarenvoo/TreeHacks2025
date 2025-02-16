@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Editor from "@monaco-editor/react";
+import Webcam from "react-webcam"; 
 
 declare global {
   interface Window {
@@ -17,6 +18,10 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
   const [pyodideReady, setPyodideReady] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const editorRef = useRef<any>(null);
+  const webcamRef = useRef<any>(null);
+  
+  const [isRecording, setIsRecording] = useState(false);
+  const [timer, setTimer] = useState(0); // Timer state
 
   useEffect(() => {
     let pyodideScript: HTMLScriptElement | null = null;
@@ -127,6 +132,29 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
     }
   };
 
+  const startRecording = () => {
+    setIsRecording(true);
+    setTimer(0); // Reset timer when recording starts
+  };
+
+  const stopRecording = () => {
+    setIsRecording(false);
+    console.log("Recording stopped");
+  };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer + 1); // Increase timer every second
+      }, 1000);
+    } else {
+      clearInterval(interval); // Stop timer when recording is off
+    }
+
+    return () => clearInterval(interval); // Clean up the interval on component unmount
+  }, [isRecording]);
+
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Panel - Interview Question */}
@@ -149,7 +177,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
       </div>
 
       {/* Right Panel - Code Editor */}
-      <div className="w-full md:w-1/2 flex flex-col bg-[#1E1E1E]">
+      <div className="w-full md:w-1/2 flex flex-col bg-[#1E1E1E] relative"> {/* Added `relative` for positioning */}
         <div className="flex-1 p-6">
           <Editor
             height="50vh"
@@ -178,6 +206,28 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
           <pre className="mt-4 p-4 bg-[#2D2D2D] text-white rounded-md font-mono text-sm h-[20vh] overflow-y-auto">
             {output || 'Output will appear here...'}
           </pre>
+        </div>
+
+        {/* Webcam in Bottom Right */}
+        <Webcam
+          mirrored
+          audio
+          muted
+          ref={webcamRef}
+          videoConstraints={{ facingMode: 'user' }}
+          onUserMedia={() => console.log('Webcam ready')}
+          className="absolute bottom-5 right-5 z-50 w-[150px] h-[150px] object-cover"
+        />
+
+        {/* Timer Above the Button */}
+        <div className="absolute bottom-20 right-5 z-50 text-white flex flex-col items-center">
+          <div className="mb-2 text-sm">{`Timer: ${timer}s`}</div>
+
+          {/* Record Button as a Red Dot */}
+          <button
+            onClick={isRecording ? stopRecording : startRecording}
+            className="w-8 h-8 rounded-full bg-red-600 hover:bg-red-700"
+          />
         </div>
       </div>
     </div>
