@@ -3,14 +3,13 @@ import { motion } from "framer-motion";
 import { Upload } from "lucide-react"; // Install npm install lucide-react
 
 interface UploadStepProps {
-  onNextStep: (resumeFile: File, jdFile: File) => void;
+  onNextStep: (resumeFile: File, jdText: string) => void;
 }
 
 const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
   const [resume, setResume] = useState<File | null>(null);
-  const [jobDescription, setJobDescription] = useState<File | null>(null);
+  const [jobDescription, setJobDescription] = useState<string>('');
   const [draggingResume, setDraggingResume] = useState(false);
-  const [draggingJD, setDraggingJD] = useState(false);
 
   const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -19,34 +18,22 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
     }
   };
 
-  const handleJDUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.type === 'application/pdf') {
-      setJobDescription(file);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent, type: 'resume' | 'jd') => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    if (type === 'resume') setDraggingResume(true);
-    else setDraggingJD(true);
+    setDraggingResume(true);
   };
 
-  const handleDragLeave = (e: React.DragEvent, type: 'resume' | 'jd') => {
-    e.preventDefault();
-    if (type === 'resume') setDraggingResume(false);
-    else setDraggingJD(false);
-  };
-
-  const handleDrop = (e: React.DragEvent, type: 'resume' | 'jd') => {
+  const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     setDraggingResume(false);
-    setDraggingJD(false);
-    
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDraggingResume(false);
     const file = e.dataTransfer.files[0];
     if (file && file.type === 'application/pdf') {
-      if (type === 'resume') setResume(file);
-      else setJobDescription(file);
+      setResume(file);
     }
   };
 
@@ -66,7 +53,7 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
         Let's prep for your interview
       </h2>
       <p className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal my-4">
-        Upload your resume and the job description to help us tailor the interview preparation to your specific needs.
+        Upload your resume and provide the job description so we can tailor your interview preparation.
       </p>
 
       <div className="space-y-4 mt-8">
@@ -75,9 +62,9 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
           className={`border-2 border-dashed rounded-lg p-8 text-center ${
             draggingResume ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
           }`}
-          onDragOver={(e) => handleDragOver(e, 'resume')}
-          onDragLeave={(e) => handleDragLeave(e, 'resume')}
-          onDrop={(e) => handleDrop(e, 'resume')}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
         >
           <input
             type="file"
@@ -97,44 +84,31 @@ const UploadStep: React.FC<UploadStepProps> = ({ onNextStep }) => {
           </label>
         </div>
 
-        {/* Job Description Upload */}
-        <div
-          className={`border-2 border-dashed rounded-lg p-8 text-center ${
-            draggingJD ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
-          }`}
-          onDragOver={(e) => handleDragOver(e, 'jd')}
-          onDragLeave={(e) => handleDragLeave(e, 'jd')}
-          onDrop={(e) => handleDrop(e, 'jd')}
-        >
-          <input
-            type="file"
-            id="jobDescription"
-            accept=".pdf"
-            onChange={handleJDUpload}
-            className="hidden"
-          />
-          <label htmlFor="jobDescription" className="cursor-pointer">
-            <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm font-medium text-gray-900">
-              {jobDescription ? jobDescription.name : 'Upload job description'}
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Drop your PDF file here or click to browse
-            </p>
+        {/* Job Description Textbox */}
+        <div className="border-2 border-dashed rounded-lg p-4 text-center border-gray-300">
+          <label htmlFor="jobDescription" className="block text-sm font-medium text-gray-900 mb-2">
+            Enter Job Description
           </label>
+          <textarea
+            id="jobDescription"
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            placeholder="Paste the job description here..."
+            className="w-full h-40 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
       </div>
 
       <div className="flex gap-[15px] justify-end mt-8">
         <button
           onClick={() => {
-            if (resume && jobDescription) {
+            if (resume && jobDescription.trim().length > 0) {
               onNextStep(resume, jobDescription);
             }
           }}
-          disabled={!resume || !jobDescription}
-          className={`group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white no-underline flex gap-x-2  active:scale-95 scale-100 duration-75 ${
-            !resume || !jobDescription 
+          disabled={!resume || jobDescription.trim().length === 0}
+          className={`group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white no-underline flex gap-x-2 active:scale-95 scale-100 duration-75 ${
+            !resume || jobDescription.trim().length === 0 
               ? 'opacity-50 cursor-not-allowed' 
               : 'hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247]'
           }`}
