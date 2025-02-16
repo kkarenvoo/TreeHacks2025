@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@11labs/react": "^0.0.7",
     "@ffmpeg/core": "^0.11.0",
     "@ffmpeg/ffmpeg": "^0.11.6",
     "@headlessui/react": "^1.7.14",

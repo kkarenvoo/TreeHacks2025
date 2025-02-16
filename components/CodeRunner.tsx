@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import Editor from "@monaco-editor/react";
-import Webcam from "react-webcam"; 
+import Webcam from "react-webcam";
+import { Conversation } from "./Conversation";
 
 declare global {
   interface Window {
@@ -9,19 +10,20 @@ declare global {
   }
 }
 
-const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({ 
-  language, 
-  initialCode 
+const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
+  language,
+  initialCode,
 }) => {
   const [code, setCode] = useState<string>(initialCode);
-  const [output, setOutput] = useState<string>('');
+  const [output, setOutput] = useState<string>("");
   const [pyodideReady, setPyodideReady] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const editorRef = useRef<any>(null);
   const webcamRef = useRef<any>(null);
-  
+
   const [isRecording, setIsRecording] = useState(false);
   const [timer, setTimer] = useState(0); // Timer state
+  const [question, setQuestion] = useState<string | null>(null);
 
   useEffect(() => {
     let pyodideScript: HTMLScriptElement | null = null;
@@ -32,16 +34,18 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js";
       script.async = true;
-      
+
       script.onload = async () => {
         await initializePyodide();
       };
-      
+
       script.onerror = () => {
-        setOutput('Failed to load Pyodide script. Please check your internet connection.');
+        setOutput(
+          "Failed to load Pyodide script. Please check your internet connection."
+        );
         setLoading(false);
       };
 
@@ -52,13 +56,13 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
     async function initializePyodide() {
       try {
         if (!window.loadPyodide) {
-          throw new Error('Pyodide not loaded properly');
+          throw new Error("Pyodide not loaded properly");
         }
 
         const pyodide = await window.loadPyodide({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"
+          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/",
         });
-        
+
         await pyodide.runPythonAsync(`
           import sys
           from io import StringIO
@@ -103,7 +107,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
       return;
     }
 
-    setOutput('Running...');
+    setOutput("Running...");
     const codeToRun = editorRef.current?.getValue() || code;
 
     try {
@@ -121,12 +125,12 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
         output
       `);
 
-      let finalOutput = stdout || '';
+      let finalOutput = stdout || "";
       if (result !== undefined && result !== null) {
-        finalOutput += (finalOutput ? '\n' : '') + String(result);
+        finalOutput += (finalOutput ? "\n" : "") + String(result);
       }
 
-      setOutput(finalOutput || 'Code executed successfully (no output)');
+      setOutput(finalOutput || "Code executed successfully (no output)");
     } catch (error) {
       setOutput(`Python Error: ${error.message || error}`);
     }
@@ -146,7 +150,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
     let interval: NodeJS.Timeout;
     if (isRecording) {
       interval = setInterval(() => {
-        setTimer(prevTimer => prevTimer + 1); // Increase timer every second
+        setTimer((prevTimer) => prevTimer + 1); // Increase timer every second
       }, 1000);
     } else {
       clearInterval(interval); // Stop timer when recording is off
@@ -160,7 +164,7 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
       {/* Left Panel - Interview Question */}
       <div className="w-full md:w-1/2 p-6 bg-[#1D2B3A] text-white overflow-y-auto">
         <h2 className="text-2xl font-semibold mb-4">
-          What is a your mom?
+          {question ?? "Start the interview"}
         </h2>
         <p className="text-sm text-gray-300 mb-6">
           Asked by top companies like Google, Facebook and more
@@ -177,21 +181,25 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
       </div>
 
       {/* Right Panel - Code Editor */}
-      <div className="w-full md:w-1/2 flex flex-col bg-[#1E1E1E] relative"> {/* Added `relative` for positioning */}
+      <div className="w-full md:w-1/2 flex flex-col bg-[#1E1E1E] relative">
+        {" "}
+        {/* Added `relative` for positioning */}
         <div className="flex-1 p-6">
           <Editor
             height="50vh"
             language={language}
             value={code}
             theme="vs-dark"
-            onChange={(value: string | undefined) => setCode(value || '')}
-            onMount={(editor: any) => { editorRef.current = editor; }}
+            onChange={(value: string | undefined) => setCode(value || "")}
+            onMount={(editor: any) => {
+              editorRef.current = editor;
+            }}
             options={{
               minimap: { enabled: false },
               fontSize: 14,
               lineNumbers: "on",
               scrollBeyondLastLine: false,
-              automaticLayout: true
+              automaticLayout: true,
             }}
           />
           <div className="mt-4">
@@ -200,25 +208,24 @@ const CodeRunner: React.FC<{ language: string; initialCode: string }> = ({
               disabled={loading || !pyodideReady}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
             >
-              {loading ? 'Loading Python...' : 'Run Code'}
+              {loading ? "Loading Python..." : "Run Code"}
             </button>
+            <Conversation setQuestion={setQuestion} code={code} />
           </div>
           <pre className="mt-4 p-4 bg-[#2D2D2D] text-white rounded-md font-mono text-sm h-[20vh] overflow-y-auto">
-            {output || 'Output will appear here...'}
+            {output || "Output will appear here..."}
           </pre>
         </div>
-
         {/* Webcam in Bottom Right */}
         <Webcam
           mirrored
           audio
           muted
           ref={webcamRef}
-          videoConstraints={{ facingMode: 'user' }}
-          onUserMedia={() => console.log('Webcam ready')}
+          videoConstraints={{ facingMode: "user" }}
+          onUserMedia={() => console.log("Webcam ready")}
           className="absolute bottom-5 right-5 z-50 w-[150px] h-[150px] object-cover"
         />
-
         {/* Timer Above the Button */}
         <div className="absolute bottom-20 right-5 z-50 text-white flex flex-col items-center">
           <div className="mb-2 text-sm">{`Timer: ${timer}s`}</div>
