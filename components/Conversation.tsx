@@ -4,6 +4,8 @@ import { useConversation } from "@11labs/react";
 import { useCallback } from "react";
 
 export function Conversation({ setQuestion, code }: any) {
+  console.log("hellooooooo")
+  console.log("from conversation", String(code));
   const conversation = useConversation({
     onConnect: () => console.log("Connected"),
     onDisconnect: () => console.log("Disconnected"),
