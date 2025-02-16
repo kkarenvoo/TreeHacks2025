@@ -1,9 +1,10 @@
-<div style="text-align: center;">
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
   <a href="https://demo.useliftoff.com">
     <img alt="CodeCrack – AI-Powered Mock Interviews" src="https://drive.google.com/uc?id=1PRzt9zw3pJdKV0Bg07YJlzY7Wsa0n0pn">
-    <h1 align="center">CodeCrack Interviews</h1>
+    <h1>CodeCrack Interviews</h1>
   </a>
 </div>
+
 
 <p align="center">
   Mock Interview Simulator with Conversational AI-Powered Feedback
