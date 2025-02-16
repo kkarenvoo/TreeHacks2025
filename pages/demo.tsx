@@ -341,7 +341,7 @@ export default function DemoPage() {
               demo interview
             </span>
           </p>
-          <CodeRunner language="python" initialCode=""/>
+          {selected.name === "Technical Coding" && <CodeRunner language="python" initialCode=""/>}
 
           {completed ? (
             <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
@@ -919,6 +919,7 @@ export default function DemoPage() {
                       </div>
                     </RadioGroup>
                   </div>
+
                   <div className="flex gap-[15px] justify-end mt-8">
                     <div>
                       <Link
