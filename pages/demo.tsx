@@ -341,7 +341,28 @@ export default function DemoPage() {
               demo interview
             </span>
           </p>
-          {selected.name === "Technical Coding" && <CodeRunner language="python" initialCode=""/>}
+          {/* {selected.name === "Technical Coding" && <CodeRunner language="python" initialCode=""/>} */}
+          {selected.name === "Technical Coding" ? (
+          <div className="relative min-h-screen">
+            {/* The code runner stays in its usual place */}
+            <CodeRunner language="python" initialCode="" />
+
+            {/* Absolutely positioned video in bottom-left */}
+            <div className="absolute bottom-4 left-4 w-[300px] h-[200px] bg-gray-200">
+              <video controls>
+                <source src="your-technical-coding-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        ) : (
+          // For "Behavioral" or "Technical Trivia"
+          // you can show a normally positioned video or any other layout
+          <div>
+            <video controls>
+              <source src="your-other-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+        )}
 
           {completed ? (
             <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
