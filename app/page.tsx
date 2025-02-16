@@ -107,7 +107,7 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
             >
               <Link
-                href="https://github.com/Tameyer41/liftoff"
+                href="https://github.com/kkarenvoo/TreeHacks2025"
                 target="_blank"
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
               >
